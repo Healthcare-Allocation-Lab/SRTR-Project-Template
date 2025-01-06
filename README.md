@@ -28,7 +28,7 @@ This file is required for all projects.
 Generates key figures for publication, such as kaplan meier curves, cumulative incidence plots, forest plots, table 1s, and strobe diagrams.
 This file is required for all projects
 
-### supplement:
+### supplement.Rmd:
 
 Contains supplemental analyses and additional visualizations supporting the main manuscript.
 This file is required for all projects.
