@@ -306,5 +306,40 @@ data <- data %>%
         kdpi = calculate_kdpi(kdri, kdpi_mapping))
 ```
 
+# IF LISTINGS FOR OTHER ORGANS ARE RELEVANT
+```{r}
+check_overlap <- function(df, other_df) {
+  # Filter for common PERS_ID
+  common_ids <- intersect(df$PERS_ID, other_df$PERS_ID)
+  
+  # Subset datasets to only include common PERS_ID
+  filtered_df <- df %>% filter(PERS_ID %in% common_ids)
+  filtered_other_df <- other_df %>% filter(PERS_ID %in% common_ids)
+  
+  # Join heart_df with the filtered other_df for date comparison
+  result <- filtered_df %>%
+    left_join(filtered_other_df, by = "PERS_ID", suffix = c("_main", "_other")) %>%
+    filter(
+      # Case 1: Overlap with removal date
+      (CAN_LISTING_DT_main >= CAN_LISTING_DT_other & 
+       CAN_LISTING_DT_main <= CAN_REM_DT_other) |
+      # Case 2: No removal date, listing dates must match or overlap
+      (is.na(CAN_REM_DT_other) & CAN_LISTING_DT_main >= CAN_LISTING_DT_other)
+    )
+  
+  return(result)
+}
+
+overlap <- check_overlap(data, other_organ_data)
+overlap <- overlap %>% select(PERS_ID, WL_ORG_main, WL_ORG_other)
+overlap <- as.data.frame(overlap %>% group_by(PERS_ID) %>% distinct())
+
+# One row per PERS_ID (combines multiple other organ listings into one)
+consolidated_overlap <- overlap_results %>%
+  group_by(PERS_ID) %>%
+  dplyr::summarize(WL_ORG_combined = paste(unique(WL_ORG_other), collapse = ", "), .groups = "drop")
+consolidated_overlap
+
+
 # Save data for import in analysis/figures files
 
