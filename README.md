@@ -4,13 +4,14 @@ This repository outlines the proper structure of a repository for an SRTR organ 
 
 ## Repository Contents
 R Markdown Files
-data_prep_post_tx.Rmd:
+
+### data_prep_post_tx.Rmd:
 
 Example data prep cases for post-transplant analyses
 Includes data cleaning, filtering, and the development of any new variables
 This file is required for any project analzying post-transplant outcomes
 
-data_prep_waitlist.Rmd:
+### data_prep_waitlist.Rmd:
 
 Example data prep cases for waitlist analyses.
 Includes data cleaning, filtering, and the development of any new variables.
