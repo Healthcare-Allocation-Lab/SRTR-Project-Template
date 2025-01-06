@@ -2,7 +2,7 @@
 
 This repository outlines the proper structure of a repository for an SRTR organ allocation project. It contains R scripts, data mapping tables (if relevant), and other supporting files for analyzing transplant data using the SRTR dataset.
 
-Repository Contents
+## Repository Contents
 R Markdown Files
 data_prep_post_tx.Rmd:
 
